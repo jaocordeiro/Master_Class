@@ -1,5 +1,5 @@
 const DatabaseError = function (database, message) {
-  this.statement = database;
+  this.database = database;
   this.message = message;
 }
 const database = {
