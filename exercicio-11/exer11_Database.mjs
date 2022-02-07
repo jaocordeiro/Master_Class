@@ -67,11 +67,15 @@ export class Database {
   }
 
   execute(statement) {
-    const result = this.parser.parse(statement);
-    if (result) {
-      return this[result.command](result.parsedStatement);
-    }
-    const message = `Syntax Error: "${statement}"`
-    throw new DatabaseError(statement, message)
+    return new Promise ((resolve, reject) => {
+      setTimeout(() => {
+        const result = this.parser.parse(statement);
+        if (result) {
+          resolve(this[result.command](result.parsedStatement));
+        }
+        const message = `Syntax Error: "${statement}"`
+        reject(new DatabaseError(statement, message))
+      }, 3000);
+    })
   }
 };
